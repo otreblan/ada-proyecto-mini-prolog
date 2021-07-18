@@ -16,16 +16,4 @@
 
 #pragma once
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-typedef enum _ast_id
-{
-	AST_DUENHO,
-	AST_HERMANOS
-} ast_id;
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
+#include "compiler/parser.h"

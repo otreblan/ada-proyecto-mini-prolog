@@ -1,6 +1,7 @@
 %{
 #include <stdlib.h>
 
+#include "compiler/parser.h"
 #include "parser.h"
 %}
 
@@ -17,3 +18,14 @@ hermanos { return hermanos; }
 [a-zA-Z] { yylval.charval = yytext[0]; return character; }
 
 %%
+
+void __parse_file_init(FILE* file)
+{
+	yyin = file;
+}
+
+void __parse_file_free(void)
+{
+	yyin = stdin;
+	yylex_destroy();
+}

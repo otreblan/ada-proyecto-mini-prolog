@@ -16,15 +16,18 @@
 
 #pragma once
 
+#include <stdio.h>
+
+#include "ast.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef enum _ast_id
-{
-	AST_DUENHO,
-	AST_HERMANOS
-} ast_id;
+ast_prolog* parse_file(FILE* file);
+
+void __parse_file_init(FILE* file);
+void __parse_file_free(void);
 
 #ifdef __cplusplus
 } // extern "C"
