@@ -25,24 +25,34 @@ project(mini-prolog
 # Without this, paths are not relative in the sources list
 cmake_policy(SET CMP0076 NEW)
 
+# Default flags
+if(UNIX)
+	if(NOT (DEFINED ENV{CFLAGS} OR CMAKE_C_FLAGS))
+		set(CMAKE_C_FLAGS "-Wall -Wextra -g")
+	endif()
+	if(NOT (DEFINED ENV{CXXFLAGS} OR CMAKE_CXX_FLAGS))
+		set(CMAKE_CXX_FLAGS "-Wall -Wextra -g")
+	endif()
+endif()
+
 include(GNUInstallDirs)
 include(FindPkgConfig)
 include(CPack)
 
-# The program itself
-add_executable(${PROJECT_NAME})
+# Packages
+find_package(BISON)
+find_package(FLEX)
+find_package(bash-completion)
+
+add_subdirectory(src) # Sources list
+add_subdirectory(pkg) # Packaging
 
 # C++ version
 set_target_properties(${PROJECT_NAME}
 	PROPERTIES
 		CXX_STANDARD 17
+		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
-
-# Packages
-find_package(bash-completion)
-
-add_subdirectory(src) # Sources list
-add_subdirectory(pkg) # Packaging
 
 ## Shared libraries
 #pkg_check_modules(shared
@@ -66,16 +76,6 @@ add_subdirectory(pkg) # Packaging
 #	INTERFACE
 #		PkgConfig::header_only
 #)
-
-# Default flags
-if(UNIX)
-	if(NOT (DEFINED ENV{CFLAGS} OR CMAKE_C_FLAGS))
-		set(CMAKE_C_FLAGS "-Wall -Wextra -g")
-	endif()
-	if(NOT (DEFINED ENV{CXXFLAGS} OR CMAKE_CXX_FLAGS))
-		set(CMAKE_CXX_FLAGS "-Wall -Wextra -g")
-	endif()
-endif()
 
 # Bash completion
 file(WRITE ${CMAKE_BINARY_DIR}/bash-completion/${PROJECT_NAME}
