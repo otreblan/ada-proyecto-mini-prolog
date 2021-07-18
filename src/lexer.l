@@ -17,6 +17,7 @@ hermanos { return hermanos; }
 
 [a-zA-Z] { yylval.charval = yytext[0]; return character; }
 
+[ \n\r\t]+ {}
 %%
 
 void __parse_file_init(FILE* file)

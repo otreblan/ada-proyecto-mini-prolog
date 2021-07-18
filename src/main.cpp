@@ -16,8 +16,13 @@
 
 #include <iostream>
 
+#include "compiler.hpp"
+
 int main()
 {
-	std::cout << "Hello\n";
+	ast_prolog* prolog = parse_file(stdin);
+
+	ast_prolog_free(prolog);
+
 	return 0;
 }
