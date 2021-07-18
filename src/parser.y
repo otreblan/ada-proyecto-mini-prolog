@@ -81,6 +81,9 @@ void yyerror(__attribute__((unused)) ast_prolog** prolog, const char* s)
 
 ast_prolog* parse_file(FILE* file)
 {
+	if(!file)
+		return NULL;
+
 	ast_prolog* prolog = NULL;
 	__parse_file_init(file);
 

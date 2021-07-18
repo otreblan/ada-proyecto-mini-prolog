@@ -14,13 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with mini-prolog.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <iostream>
+#pragma once
 
-#include "mini_prolog.hpp"
-
-int main(int argc, char* argv[])
-{
-	ada::mini_prolog mp(argc, argv);
-
-	return mp.run();
-}
+#include "mini_prolog/mini_prolog.hpp"

@@ -14,13 +14,42 @@
 // You should have received a copy of the GNU General Public License
 // along with mini-prolog.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <iostream>
+#pragma once
 
-#include "mini_prolog.hpp"
+#include <string>
 
-int main(int argc, char* argv[])
+namespace ada
 {
-	ada::mini_prolog mp(argc, argv);
 
-	return mp.run();
-}
+class mini_prolog
+{
+private:
+	enum class action_type
+	{
+		none,
+		heuristic,
+		optim,
+		execute,
+	};
+
+	/// The action to do.
+	action_type action;
+
+	/// The path to the input of this program.
+	std::string input_path;
+
+	/// The path to the output of this program.
+	std::string output_path;
+
+
+	[[noreturn]]
+	void usage(int exit_code);
+
+public:
+	mini_prolog(int argc, char* argv[]);
+
+	/// Compile or execute and return the exit code.
+	int run();
+};
+
+};
