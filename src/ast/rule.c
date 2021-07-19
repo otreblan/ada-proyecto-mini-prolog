@@ -28,13 +28,14 @@ static ast_rule* ast_rule_alloc()
 	if(rule)
 		*rule = (ast_rule)
 		{
-			.character_list = NULL
+			.character_list = NULL,
+			.id             = NULL
 		};
 
 	return rule;
 }
 
-ast_rule* ast_rule1(ast_id id, ast_character_list* character_list)
+ast_rule* ast_rule1(char* id, ast_character_list* character_list)
 {
 	ast_rule* rule = ast_rule_alloc();
 
@@ -51,6 +52,7 @@ void ast_rule_free(ast_rule* rule)
 {
 	if(rule)
 	{
+		free(rule->id);
 		ast_character_list_free(rule->character_list);
 	}
 	free(rule);

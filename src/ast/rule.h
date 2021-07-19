@@ -16,8 +16,6 @@
 
 #pragma once
 
-#include "id.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -26,11 +24,11 @@ typedef struct _ast_character_list ast_character_list;
 
 typedef struct _ast_rule
 {
-	ast_id              id;
+	char*               id;
 	ast_character_list* character_list;
 } ast_rule;
 
-ast_rule* ast_rule1(ast_id id, ast_character_list* character_list);
+ast_rule* ast_rule1(char* id, ast_character_list* character_list);
 
 void ast_rule_free(ast_rule* rule);
 

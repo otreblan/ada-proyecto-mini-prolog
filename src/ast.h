@@ -17,7 +17,6 @@
 #pragma once
 
 #include "ast/character_list.h"
-#include "ast/id.h"
 #include "ast/prolog.h"
 #include "ast/rule.h"
 #include "ast/rule_list.h"

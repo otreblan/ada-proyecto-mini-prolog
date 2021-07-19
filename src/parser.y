@@ -16,9 +16,8 @@ void yyerror(ast_prolog** prolog, const char* s);
 %define parse.error verbose
 
 %union {
-	char charval;
-
-	ast_id idval;
+	char  charval;
+	char* strval;
 
 	ast_character_list* character_list;
 	ast_rule*           rule;
@@ -26,7 +25,7 @@ void yyerror(ast_prolog** prolog, const char* s);
 }
 
 %destructor { }                              <charval>
-%destructor { }                              <idval>
+%destructor { free($$); }                    <strval>
 %destructor { ast_character_list_free($$); } <character_list>
 %destructor { ast_rule_free($$); }           <rule>
 %destructor { ast_rule_list_free($$); }      <rule_list>
@@ -35,9 +34,9 @@ void yyerror(ast_prolog** prolog, const char* s);
 %token hermanos
 
 %token<charval> character
+%token<strval>  id
 
 %type<character_list> character_list
-%type<idval>          id
 %type<rule>           rule
 %type<rule_list>      rule_list
 
@@ -60,11 +59,6 @@ rule_list
 
 rule
 	: id '(' character_list ')' { $$ = ast_rule1($1, $3); }
-	;
-
-id
-	: duenho   { $$ = AST_DUENHO;   }
-	| hermanos { $$ = AST_HERMANOS; }
 	;
 
 character_list
