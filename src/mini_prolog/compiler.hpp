@@ -16,5 +16,11 @@
 
 #pragma once
 
-#include "mini_prolog/compiler.hpp"
-#include "mini_prolog/mini_prolog.hpp"
+namespace ada
+{
+
+class compiler
+{
+};
+
+};

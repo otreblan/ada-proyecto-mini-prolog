@@ -17,5 +17,6 @@
 target_sources(${PROJECT_NAME}
 	PRIVATE
 		# C++
+		compiler.cpp
 		mini_prolog.cpp
 )
