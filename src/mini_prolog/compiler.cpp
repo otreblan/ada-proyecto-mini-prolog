@@ -22,12 +22,22 @@ ada::compiler::compiler(FILE* outfile):
 
 void ada::compiler::compile_heuristic(const ast_prolog& prolog)
 {
-	// TODO
-	fprintf(stderr, "%s\n", "Compile with heuristic: TODO");
+	for(const auto* rule = prolog.rule_list; rule; rule = rule->next)
+	{
+		// TODO
+		printf("%s(...)\n", rule->rule->id);
+	}
+
+	// TODO write tries
 }
 
 void ada::compiler::compile_optimal(const ast_prolog& prolog)
 {
-	// TODO
-	fprintf(stderr, "%s\n", "Compile optimaly: TODO");
+	for(const auto* rule = prolog.rule_list; rule; rule = rule->next)
+	{
+		// TODO
+		printf("%s(...)\n", rule->rule->id);
+	}
+
+	// TODO write tries
 }

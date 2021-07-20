@@ -119,6 +119,7 @@ int ada::mini_prolog::run()
 	if(!prolog)
 		return EXIT_FAILURE;
 
+	int exit_code = EXIT_SUCCESS;
 	switch(action)
 	{
 		case action_type::execute:
@@ -126,6 +127,7 @@ int ada::mini_prolog::run()
 			if(trie_path.empty())
 			{
 				fprintf(stderr, "%s\n", "Missing trie file");
+				exit_code = EXIT_FAILURE;
 				break;
 			}
 
@@ -138,6 +140,7 @@ int ada::mini_prolog::run()
 				break;
 			}
 
+			exit_code = EXIT_FAILURE;
 			perror(trie_path.c_str());
 			break;
 		}
@@ -167,6 +170,7 @@ int ada::mini_prolog::run()
 				break;
 			}
 
+			exit_code = EXIT_FAILURE;
 			perror(output_path.c_str());
 			break;
 		}
@@ -176,5 +180,5 @@ int ada::mini_prolog::run()
 	}
 
 	ast_prolog_free(prolog);
-	return EXIT_SUCCESS;
+	return exit_code;
 }
