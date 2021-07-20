@@ -1,7 +1,7 @@
 %{
 #include <stdio.h>
 
-#include "compiler/parser.h"
+#include "compiler/utils.h"
 
 int yylex();
 void yyerror(ast_prolog** prolog, const char* s);

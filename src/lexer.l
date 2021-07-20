@@ -1,7 +1,7 @@
 %{
 #include <stdlib.h>
 
-#include "compiler/parser.h"
+#include "compiler/utils.h"
 #include "parser.h"
 %}
 
