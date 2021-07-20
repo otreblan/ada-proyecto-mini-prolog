@@ -14,8 +14,4 @@
 // You should have received a copy of the GNU General Public License
 // along with mini-prolog.  If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
-
-#include "mini_prolog/compiler.hpp"
-#include "mini_prolog/executor.hpp"
-#include "mini_prolog/mini_prolog.hpp"
+#include "executor.hpp"
