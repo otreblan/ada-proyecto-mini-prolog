@@ -15,3 +15,12 @@
 // along with mini-prolog.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "executor.hpp"
+
+ada::executor::executor()
+{}
+
+void ada::executor::execute(const ast_prolog& prolog)
+{
+	// TODO
+	fprintf(stderr, "%s\n", "Compile: TODO");
+}

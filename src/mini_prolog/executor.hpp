@@ -16,11 +16,19 @@
 
 #pragma once
 
+#include <cstdio>
+
+#include "utils.h"
+
 namespace ada
 {
 
 class executor
 {
+public:
+	executor();
+
+	void execute(const ast_prolog& prolog);
 };
 
 };

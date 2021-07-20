@@ -18,6 +18,8 @@
 #include <cstdlib>
 #include <getopt.h>
 
+#include "compiler.hpp"
+#include "executor.hpp"
 #include "mini_prolog.hpp"
 #include "utils.h"
 
@@ -93,7 +95,10 @@ ada::mini_prolog::mini_prolog(int argc, char* argv[])
 int ada::mini_prolog::run()
 {
 	if(action == action_type::none)
+	{
+		fprintf(stderr, "%s\n", "Missing action");
 		return EXIT_FAILURE;
+	}
 
 	FILE* input = fopen(input_path.c_str(), "r");
 	if(!input)
@@ -103,6 +108,7 @@ int ada::mini_prolog::run()
 	}
 
 	ast_prolog* prolog = parse_file(input);
+	fclose(input);
 
 	if(!prolog)
 		return EXIT_FAILURE;
@@ -110,15 +116,36 @@ int ada::mini_prolog::run()
 	switch(action)
 	{
 		case action_type::execute:
-			// TODO
-			printf("%s\n", "Execute: TODO");
+			executor().execute(*prolog);
 			break;
 
 		case action_type::heuristic:
 		case action_type::optim:
-			// TODO
-			printf("%s\n", "Compile: TODO");
+		{
+			if(FILE* output = fopen(output_path.c_str(), "w"))
+			{
+				compiler c(output);
+
+				switch(action)
+				{
+					case action_type::heuristic:
+						c.compile_heuristic(*prolog);
+						break;
+
+					case action_type::optim:
+						c.compile_optimal(*prolog);
+						break;
+
+					default:
+						break;
+				}
+
+				break;
+			}
+
+			perror(output_path.c_str());
 			break;
+		}
 
 		default:
 			break;

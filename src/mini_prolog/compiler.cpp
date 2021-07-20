@@ -15,3 +15,19 @@
 // along with mini-prolog.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "compiler.hpp"
+
+ada::compiler::compiler(FILE* outfile):
+	outfile(outfile)
+{}
+
+void ada::compiler::compile_heuristic(const ast_prolog& prolog)
+{
+	// TODO
+	fprintf(stderr, "%s\n", "Compile with heuristic: TODO");
+}
+
+void ada::compiler::compile_optimal(const ast_prolog& prolog)
+{
+	// TODO
+	fprintf(stderr, "%s\n", "Compile optimaly: TODO");
+}

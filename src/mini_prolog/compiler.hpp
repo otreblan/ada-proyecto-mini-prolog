@@ -16,11 +16,22 @@
 
 #pragma once
 
+#include <cstdio>
+
+#include "utils.h"
+
 namespace ada
 {
 
 class compiler
 {
+private:
+	FILE* outfile;
+public:
+	compiler(FILE* outfile);
+
+	void compile_heuristic(const ast_prolog& prolog);
+	void compile_optimal(const ast_prolog& prolog);
 };
 
 };
