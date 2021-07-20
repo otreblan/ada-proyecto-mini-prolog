@@ -18,8 +18,8 @@
 #include <cstdlib>
 #include <getopt.h>
 
-#include "compiler.hpp"
 #include "mini_prolog.hpp"
+#include "utils.h"
 
 void ada::mini_prolog::usage(int exit_code)
 {
@@ -107,7 +107,6 @@ int ada::mini_prolog::run()
 	if(!prolog)
 		return EXIT_FAILURE;
 
-	// TODO
 	switch(action)
 	{
 		case action_type::execute:

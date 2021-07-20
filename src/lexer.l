@@ -1,8 +1,8 @@
 %{
 #include <stdlib.h>
 
-#include "compiler/utils.h"
 #include "parser.h"
+#include "utils.h"
 %}
 
 %option noinput
