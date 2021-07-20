@@ -25,6 +25,9 @@ namespace ada
 
 class executor
 {
+private:
+	// Trie
+
 public:
 	executor();
 

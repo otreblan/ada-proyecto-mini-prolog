@@ -27,11 +27,12 @@ void ada::mini_prolog::usage(int exit_code)
 {
 	fprintf(stderr, "%s",
 		"Usage: mini-prolog (-H|-O|-e) [-oFILE] FILE\n"
-		"\t-h, --help        Show this help\n"
-		"\t-H, --heuristic   Compile with heuristic.\n"
-		"\t-O, --optim       Compile optimaly.\n"
-		"\t-e, --execute     Execute queries.\n"
-		"\t-o, --output=FILE Place the output in FILE.\n"
+		"\t-h, --help           Show this help\n"
+		"\t-H, --heuristic      Compile with heuristic.\n"
+		"\t-O, --optim          Compile optimaly.\n"
+		"\t-e, --execute        Execute queries.\n"
+		"\t-o, --output=FILE    Place the output in FILE.\n"
+		"\t-t, --trie-file=FILE File with compiled tries.\n"
 	);
 	exit(exit_code);
 }
@@ -42,7 +43,7 @@ ada::mini_prolog::mini_prolog(int argc, char* argv[])
 		usage(EXIT_FAILURE);
 
 	int c;
-	static const char shortopts[] = "hHOeo:";
+	static const char shortopts[] = "hHOeo:t:";
 	static const option options[] =
 	{
 		{"help",      no_argument,       nullptr, 'h'},
@@ -50,6 +51,7 @@ ada::mini_prolog::mini_prolog(int argc, char* argv[])
 		{"optim",     no_argument,       nullptr, 'O'},
 		{"execute",   no_argument,       nullptr, 'e'},
 		{"output",    required_argument, nullptr, 'o'},
+		{"trie-file", required_argument, nullptr, 't'},
 	};
 
 	// Defaults
@@ -78,6 +80,10 @@ ada::mini_prolog::mini_prolog(int argc, char* argv[])
 
 			case 'o':
 				output_path = optarg;
+				break;
+
+			case 't':
+				trie_path = optarg;
 				break;
 
 			default:
@@ -116,8 +122,25 @@ int ada::mini_prolog::run()
 	switch(action)
 	{
 		case action_type::execute:
-			executor().execute(*prolog);
+		{
+			if(trie_path.empty())
+			{
+				fprintf(stderr, "%s\n", "Missing trie file");
+				break;
+			}
+
+			if(FILE* trie_file = fopen(trie_path.c_str(), "r"))
+			{
+				// TODO parse tries
+				executor().execute(*prolog);
+
+				fclose(trie_file);
+				break;
+			}
+
+			perror(trie_path.c_str());
 			break;
+		}
 
 		case action_type::heuristic:
 		case action_type::optim:
@@ -140,6 +163,7 @@ int ada::mini_prolog::run()
 						break;
 				}
 
+				fclose(output);
 				break;
 			}
 

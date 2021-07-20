@@ -38,6 +38,9 @@ private:
 	/// The path to the input of this program.
 	std::string input_path;
 
+	/// The path to the file with compiled tries.
+	std::string trie_path;
+
 	/// The path to the output of this program.
 	std::string output_path;
 
