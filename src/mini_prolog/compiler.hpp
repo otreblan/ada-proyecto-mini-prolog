@@ -28,14 +28,19 @@ namespace ada
 class compiler
 {
 private:
+	using rule_map_t = std::multimap<std::pair<std::string, size_t>, std::string>;
+
 	FILE* outfile;
 	const ast_prolog& prolog;
 
 	/// Gather S sets for each pair of rules and it's sequence length.
-	std::multimap<std::pair<std::string, size_t>, std::string> collapse_rules() const;
+	rule_map_t collapse_rules() const;
 
 	/// Make a string from a rule's character_list.
 	static std::string rule_s(const ast_rule& rule);
+
+	/// Print the mmap from collapse_rules().
+	static void print(const rule_map_t& rmap, FILE* file = stderr);
 
 public:
 	compiler(FILE* outfile, const ast_prolog& prolog);

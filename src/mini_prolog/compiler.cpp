@@ -16,20 +16,20 @@
 
 #include "compiler.hpp"
 
-std::multimap<std::pair<std::string, size_t>, std::string> ada::compiler::collapse_rules() const
+ada::compiler::rule_map_t ada::compiler::collapse_rules() const
 {
-	std::multimap<std::pair<std::string, size_t>, std::string> mmap;
+	rule_map_t rmap;
 
 	for(const auto* rule_l = prolog.rule_list; rule_l; rule_l = rule_l->next)
 	{
 		if(const auto* rule = rule_l->rule)
 		{
 			std::string s = rule_s(*rule);
-			mmap.emplace(std::make_pair(std::make_pair(rule->id, s.size()), s));
+			rmap.emplace(std::make_pair(std::make_pair(rule->id, s.size()), s));
 		}
 	}
 
-	return mmap;
+	return rmap;
 }
 
 std::string ada::compiler::rule_s(const ast_rule& rule)
@@ -44,6 +44,21 @@ std::string ada::compiler::rule_s(const ast_rule& rule)
 	return s;
 }
 
+void ada::compiler::print(const rule_map_t& rmap, FILE* file)
+{
+	for(const auto& [rule, seq]: rmap)
+	{
+		fprintf(file, "%s(", rule.first.c_str());
+
+		for(size_t i = 0; i < seq.size(); i++)
+		{
+			fprintf(file, "%s%c", i != 0 ? ", " : "", seq[i]);
+		}
+
+		fprintf(file, ")\n");
+	}
+}
+
 ada::compiler::compiler(FILE* outfile, const ast_prolog& prolog):
 	outfile(outfile),
 	prolog(prolog)
@@ -51,22 +66,18 @@ ada::compiler::compiler(FILE* outfile, const ast_prolog& prolog):
 
 void ada::compiler::compile_heuristic()
 {
-	for(const auto* rule = prolog.rule_list; rule; rule = rule->next)
-	{
-		// TODO
-		printf("%s(...)\n", rule->rule->id);
-	}
+	const rule_map_t rmap = collapse_rules();
+
+	print(rmap);
 
 	// TODO write tries
 }
 
 void ada::compiler::compile_optimal()
 {
-	for(const auto* rule = prolog.rule_list; rule; rule = rule->next)
-	{
-		// TODO
-		printf("%s(...)\n", rule->rule->id);
-	}
+	const rule_map_t rmap = collapse_rules();
+
+	print(rmap);
 
 	// TODO write tries
 }
