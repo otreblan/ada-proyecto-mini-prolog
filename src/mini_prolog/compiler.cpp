@@ -16,11 +16,40 @@
 
 #include "compiler.hpp"
 
-ada::compiler::compiler(FILE* outfile):
-	outfile(outfile)
+std::multimap<std::pair<std::string, size_t>, std::string> ada::compiler::collapse_rules() const
+{
+	std::multimap<std::pair<std::string, size_t>, std::string> mmap;
+
+	for(const auto* rule_l = prolog.rule_list; rule_l; rule_l = rule_l->next)
+	{
+		if(const auto* rule = rule_l->rule)
+		{
+			std::string s = rule_s(*rule);
+			mmap.emplace(std::make_pair(std::make_pair(rule->id, s.size()), s));
+		}
+	}
+
+	return mmap;
+}
+
+std::string ada::compiler::rule_s(const ast_rule& rule)
+{
+	std::string s;
+
+	for(const auto* seq = rule.character_list; seq; seq = seq->next)
+	{
+		s.push_back(seq->c);
+	}
+
+	return s;
+}
+
+ada::compiler::compiler(FILE* outfile, const ast_prolog& prolog):
+	outfile(outfile),
+	prolog(prolog)
 {}
 
-void ada::compiler::compile_heuristic(const ast_prolog& prolog)
+void ada::compiler::compile_heuristic()
 {
 	for(const auto* rule = prolog.rule_list; rule; rule = rule->next)
 	{
@@ -31,7 +60,7 @@ void ada::compiler::compile_heuristic(const ast_prolog& prolog)
 	// TODO write tries
 }
 
-void ada::compiler::compile_optimal(const ast_prolog& prolog)
+void ada::compiler::compile_optimal()
 {
 	for(const auto* rule = prolog.rule_list; rule; rule = rule->next)
 	{

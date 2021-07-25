@@ -150,16 +150,16 @@ int ada::mini_prolog::run()
 		{
 			if(FILE* output = fopen(output_path.c_str(), "w"))
 			{
-				compiler c(output);
+				compiler c(output, *prolog);
 
 				switch(action)
 				{
 					case action_type::heuristic:
-						c.compile_heuristic(*prolog);
+						c.compile_heuristic();
 						break;
 
 					case action_type::optim:
-						c.compile_optimal(*prolog);
+						c.compile_optimal();
 						break;
 
 					default:

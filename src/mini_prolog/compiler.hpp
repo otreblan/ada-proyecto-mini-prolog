@@ -17,6 +17,8 @@
 #pragma once
 
 #include <cstdio>
+#include <map>
+#include <string>
 
 #include "utils.h"
 
@@ -27,11 +29,19 @@ class compiler
 {
 private:
 	FILE* outfile;
-public:
-	compiler(FILE* outfile);
+	const ast_prolog& prolog;
 
-	void compile_heuristic(const ast_prolog& prolog);
-	void compile_optimal(const ast_prolog& prolog);
+	/// Gather S sets for each pair of rules and it's sequence length.
+	std::multimap<std::pair<std::string, size_t>, std::string> collapse_rules() const;
+
+	/// Make a string from a rule's character_list.
+	static std::string rule_s(const ast_rule& rule);
+
+public:
+	compiler(FILE* outfile, const ast_prolog& prolog);
+
+	void compile_heuristic();
+	void compile_optimal();
 };
 
 };
