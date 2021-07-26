@@ -20,4 +20,5 @@ target_sources(${PROJECT_NAME}
 		compiler.cpp
 		executor.cpp
 		mini_prolog.cpp
+		trie.cpp
 )
