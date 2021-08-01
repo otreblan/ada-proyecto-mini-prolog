@@ -17,6 +17,7 @@
 #pragma once
 
 #include <cstdio>
+#include <functional>
 #include <map>
 #include <string>
 #include <vector>
@@ -42,6 +43,9 @@ private:
 
 	/// Print the mmap from collapse_rules().
 	static void print(const rule_map_t& rmap, FILE* file = stderr);
+
+	/// Compile the tries with f() as the function that gives the order.
+	void compile(std::function<std::vector<size_t>(const std::vector<std::string>&)> f);
 
 public:
 	compiler(FILE* outfile, const ast_prolog& prolog);

@@ -17,6 +17,7 @@
 #include <string_view>
 
 #include "compiler.hpp"
+#include "trie_map.hpp"
 
 ada::compiler::rule_map_t ada::compiler::collapse_rules() const
 {
@@ -69,20 +70,28 @@ ada::compiler::compiler(FILE* outfile, const ast_prolog& prolog):
 	prolog(prolog)
 {}
 
-void ada::compiler::compile_heuristic()
+void ada::compiler::compile(
+	std::function<std::vector<size_t>(const std::vector<std::string>&)> f)
 {
 	const rule_map_t rmap = collapse_rules();
 
 	print(rmap);
+}
 
-	// TODO write tries
+void ada::compiler::compile_heuristic()
+{
+	compile([](const std::vector<std::string>& S) -> std::vector<size_t>
+	{
+		//TODO
+		return {};
+	});
 }
 
 void ada::compiler::compile_optimal()
 {
-	const rule_map_t rmap = collapse_rules();
-
-	print(rmap);
-
-	// TODO write tries
+	compile([](const std::vector<std::string>& S) -> std::vector<size_t>
+	{
+		//TODO
+		return {};
+	});
 }
