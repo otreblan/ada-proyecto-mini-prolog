@@ -56,7 +56,7 @@ ada::mini_prolog::mini_prolog(int argc, char* argv[])
 
 	// Defaults
 	action      = action_type::none;
-	output_path = "a.out";
+	output_path = "a.json";
 
 	while((c = getopt_long(argc, argv, shortopts, options, nullptr)) != -1)
 	{

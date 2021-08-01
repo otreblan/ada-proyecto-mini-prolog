@@ -92,5 +92,5 @@ void ada::trie_map::add_trie(
 	const std::vector<size_t>&      p
 )
 {
-	//TODO
+	tm.emplace(std::make_pair(std::make_pair(rule, length), trie(S, p)));
 }

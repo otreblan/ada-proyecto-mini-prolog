@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with mini-prolog.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <numeric>
 #include <string_view>
 
 #include "compiler.hpp"
@@ -74,16 +75,44 @@ void ada::compiler::compile(
 	std::function<std::vector<size_t>(const std::vector<std::string>&)> f)
 {
 	const rule_map_t rmap = collapse_rules();
+	trie_map tm;
 
-	print(rmap);
+	//print(rmap);
+	for(const auto& [rule, S]: rmap)
+		tm.add_trie(rule.first, rule.second, S, f(S));
+
+	tm.dump(outfile);
 }
 
 void ada::compiler::compile_heuristic()
 {
 	compile([](const std::vector<std::string>& S) -> std::vector<size_t>
 	{
-		//TODO
-		return {};
+		if(S.empty())
+			return {};
+
+		auto h = [&](size_t i)
+		{
+			std::set<char> sigma;
+			for(const auto& s: S)
+				sigma.insert(s.at(i));
+
+			return sigma.size();
+		};
+
+		size_t m = S.front().size();
+
+		std::vector<size_t> p(m);
+		std::iota(p.begin(), p.end(), 0);
+
+		std::sort(p.begin(), p.end(),
+			[&](size_t l, size_t r)
+			{
+				return h(l) < h(r);
+			}
+		);
+
+		return p;
 	});
 }
 
