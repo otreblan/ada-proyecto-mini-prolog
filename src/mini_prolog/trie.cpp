@@ -16,6 +16,27 @@
 
 #include "trie.hpp"
 
+ada::trie::trie(
+	const std::vector<std::string>& S,
+	const std::vector<size_t>&      p
+	)
+{
+	// m
+	m = S.empty() ? 0 : S.front().size();
+
+	// sigma
+	for(std::string_view str: S)
+		sigma.insert(str.begin(), str.end());
+
+	// sigma_order
+	size_t order = 0;
+	for(char c: sigma)
+		sigma_order[c] = order++;
+
+	// matrix
+	// TODO
+}
+
 std::string ada::trie::sigma_str() const
 {
 	std::string s;

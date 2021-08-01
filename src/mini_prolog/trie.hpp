@@ -40,6 +40,7 @@ private:
 	/// The trie itself.
 	std::vector<ssize_t> matrix;
 public:
+	trie(const std::vector<std::string>& S, const std::vector<size_t>& p);
 
 	/// Get the alphabet as a string.
 	std::string sigma_str() const;
