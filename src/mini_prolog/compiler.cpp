@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with mini-prolog.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <string_view>
+
 #include "compiler.hpp"
 
 ada::compiler::rule_map_t ada::compiler::collapse_rules() const
@@ -25,7 +27,8 @@ ada::compiler::rule_map_t ada::compiler::collapse_rules() const
 		if(const auto* rule = rule_l->rule)
 		{
 			std::string s = rule_s(*rule);
-			rmap.emplace(std::make_pair(std::make_pair(rule->id, s.size()), s));
+			size_t size = s.size();
+			rmap[{rule->id, size}].emplace_back(std::move(s));
 		}
 	}
 
@@ -46,16 +49,18 @@ std::string ada::compiler::rule_s(const ast_rule& rule)
 
 void ada::compiler::print(const rule_map_t& rmap, FILE* file)
 {
-	for(const auto& [rule, seq]: rmap)
+	for(const auto& [rule, S]: rmap)
 	{
-		fprintf(file, "%s(", rule.first.c_str());
-
-		for(size_t i = 0; i < seq.size(); i++)
+		for(std::string_view str: S)
 		{
-			fprintf(file, "%s%c", i != 0 ? ", " : "", seq[i]);
-		}
+			fprintf(file, "%s(", rule.first.c_str());
 
-		fprintf(file, ")\n");
+			for(size_t i = 0; i < str.size(); i++)
+			{
+				fprintf(file, "%s%c", i != 0 ? ", " : "", str[i]);
+			}
+			fprintf(file, ")\n");
+		}
 	}
 }
 

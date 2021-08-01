@@ -19,6 +19,7 @@
 #include <cstdio>
 #include <map>
 #include <string>
+#include <vector>
 
 #include "utils.h"
 
@@ -28,7 +29,7 @@ namespace ada
 class compiler
 {
 private:
-	using rule_map_t = std::multimap<std::pair<std::string, size_t>, std::string>;
+	using rule_map_t = std::map<std::pair<std::string, size_t>, std::vector<std::string>>;
 
 	FILE* outfile;
 	const ast_prolog& prolog;
