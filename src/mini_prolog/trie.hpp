@@ -19,6 +19,7 @@
 #include <cstdlib>
 #include <set>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 namespace ada
@@ -32,6 +33,9 @@ private:
 
 	/// Alphabet.
 	std::set<char> sigma;
+
+	/// A mapping between the alphabet and the index of each character.
+	std::unordered_map<char, size_t> sigma_order;
 
 	/// The trie itself.
 	std::vector<ssize_t> matrix;
