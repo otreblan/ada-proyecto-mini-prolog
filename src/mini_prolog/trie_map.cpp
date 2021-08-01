@@ -84,3 +84,13 @@ bool ada::trie_map::load(FILE* file)
 
 	return true;
 }
+
+void ada::trie_map::add_trie(
+	std::string_view                rule,
+	size_t                          length,
+	const std::vector<std::string>& S,
+	const std::vector<size_t>&      p
+)
+{
+	//TODO
+}

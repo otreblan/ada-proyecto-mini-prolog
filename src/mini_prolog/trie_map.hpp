@@ -19,6 +19,7 @@
 #include <cstdio>
 #include <map>
 #include <string>
+#include <string_view>
 
 #include <rapidjson/reader.h>
 
@@ -52,6 +53,14 @@ public:
 
 	/// Load tries from json.
 	bool load(FILE* file);
+
+	/// Add a new trie for a rule and length pair.
+	void add_trie(
+		std::string_view                rule,
+		size_t                          length,
+		const std::vector<std::string>& S,
+		const std::vector<size_t>&      p
+	);
 };
 
 };
