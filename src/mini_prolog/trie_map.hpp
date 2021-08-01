@@ -20,6 +20,8 @@
 #include <map>
 #include <string>
 
+#include <rapidjson/reader.h>
+
 #include "trie.hpp"
 
 namespace ada
@@ -33,12 +35,23 @@ private:
 	/// The map itself.
 	std::map<key_t, trie> tm;
 
+	class json_handler:
+		public rapidjson::BaseReaderHandler<rapidjson::UTF8<>, json_handler>
+	{
+	private:
+		trie_map& tm;
+	public:
+		json_handler(trie_map& tm):
+			tm(tm)
+		{};
+		// TODO
+	};
 public:
 	/// Write the tries as json.
 	void dump(FILE* file) const;
 
 	/// Load tries from json.
-	void load(FILE* file);
+	bool load(FILE* file);
 };
 
 };

@@ -16,16 +16,21 @@
 
 #include <climits>
 
+#include <rapidjson/error/en.h>
+#include <rapidjson/filereadstream.h>
 #include <rapidjson/filewritestream.h>
+#include <rapidjson/reader.h>
 #include <rapidjson/writer.h>
 
 #include "trie_map.hpp"
 
 void ada::trie_map::dump(FILE* file) const
 {
-	char buffer[PIPE_BUF];
-	rapidjson::FileWriteStream fws(file, buffer, sizeof(buffer));
-	rapidjson::Writer writer(fws);
+	using namespace rapidjson;
+
+	char            buffer[PIPE_BUF];
+	FileWriteStream fws(file, buffer, sizeof(buffer));
+	Writer          writer(fws);
 
 	writer.StartObject();
 
@@ -61,7 +66,21 @@ void ada::trie_map::dump(FILE* file) const
 	writer.EndObject();
 }
 
-void ada::trie_map::load(FILE* file)
+bool ada::trie_map::load(FILE* file)
 {
-	// TODO
+	using namespace rapidjson;
+
+	char           buffer[PIPE_BUF];
+	json_handler   handler(*this);
+	Reader         reader;
+	FileReadStream frs(file, buffer, sizeof(buffer));
+
+	if(!reader.Parse<ParseFlag::kParseNumbersAsStringsFlag>(frs, handler))
+	{
+		ParseErrorCode e = reader.GetParseErrorCode();
+		fprintf(stderr, "%s\n", GetParseError_En(e));
+		return false;
+	}
+
+	return true;
 }
