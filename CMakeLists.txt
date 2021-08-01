@@ -60,22 +60,21 @@ set_target_properties(${PROJECT_NAME}
 #		libfoo1
 #		libfoo2
 #)
-#
-## Header only libraries
-#pkg_check_modules(header_only
-#	REQUIRED IMPORTED_TARGET
-#		libfoo3
-#		libfoo4
-#)
-#
-## Linking
-#target_link_libraries(${PROJECT_NAME}
+
+# Header only libraries
+pkg_check_modules(header_only
+	REQUIRED IMPORTED_TARGET
+		RapidJSON
+)
+
+# Linking
+target_link_libraries(${PROJECT_NAME}
 #	PRIVATE
 #		PkgConfig::shared
-#
-#	INTERFACE
-#		PkgConfig::header_only
-#)
+
+	INTERFACE
+		PkgConfig::header_only
+)
 
 # Bash completion
 file(WRITE ${CMAKE_BINARY_DIR}/bash-completion/${PROJECT_NAME}

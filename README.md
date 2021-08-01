@@ -6,6 +6,7 @@
 * `bison`
 * `cmake`
 * `libfl-dev`
+* `rapidjson-dev`
 
 ## Build
 ``` bash
