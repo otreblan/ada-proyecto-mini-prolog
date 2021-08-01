@@ -56,10 +56,18 @@ ada::trie::trie(
 	sigma_order(sigma_order_init(sigma)),
 	matrix(sigma_order.size()*m*(1+S.size()), -1)
 {
-	// matrix
 	for(std::string_view str: S)
 	{
-		//TODO
+		ssize_t node_i = 0;
+
+		for(size_t p_i : p)
+		{
+			char c = str.at(p_i);
+			node_i = matrix_index(node_i == 0 ? 0 : matrix.at(node_i), c);
+
+			if(matrix.at(node_i) == -1)
+				matrix.at(node_i) = nodes_n++;
+		}
 	}
 }
 
