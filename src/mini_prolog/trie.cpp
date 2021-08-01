@@ -16,25 +16,51 @@
 
 #include "trie.hpp"
 
-ada::trie::trie(
-	const std::vector<std::string>& S,
-	const std::vector<size_t>&      p
-	)
-{
-	// m
-	m = S.empty() ? 0 : S.front().size();
+static size_t m_init(const std::vector<std::string>& S);
+static std::set<char> sigma_init(const std::vector<std::string>& S);
+static std::unordered_map<char, size_t> sigma_order_init(const std::set<char>& sigma);
 
-	// sigma
+static size_t m_init(const std::vector<std::string>& S)
+{
+	return S.empty() ? 0 : S.front().size();
+}
+
+static std::set<char> sigma_init(const std::vector<std::string>& S)
+{
+	std::set<char> sigma;
+
 	for(std::string_view str: S)
 		sigma.insert(str.begin(), str.end());
 
-	// sigma_order
+	return sigma;
+}
+
+static std::unordered_map<char, size_t> sigma_order_init(const std::set<char>& sigma)
+{
+	std::unordered_map<char, size_t> sigma_order;
 	size_t order = 0;
+
 	for(char c: sigma)
 		sigma_order[c] = order++;
 
+	return sigma_order;
+}
+
+ada::trie::trie(
+	const std::vector<std::string>& S,
+	const std::vector<size_t>&      p
+	):
+	m(m_init(S)),
+	nodes_n(1), // Root
+	sigma(sigma_init(S)),
+	sigma_order(sigma_order_init(sigma)),
+	matrix(sigma_order.size()*m*(1+S.size()), -1)
+{
 	// matrix
-	// TODO
+	for(std::string_view str: S)
+	{
+		//TODO
+	}
 }
 
 std::string ada::trie::sigma_str() const

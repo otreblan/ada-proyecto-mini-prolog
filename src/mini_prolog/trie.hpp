@@ -31,6 +31,9 @@ private:
 	/// Size of the strings in S.
 	size_t m;
 
+	/// The number of nodes in the trie.
+	size_t nodes_n;
+
 	/// Alphabet.
 	std::set<char> sigma;
 
