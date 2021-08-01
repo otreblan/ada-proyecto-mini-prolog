@@ -45,6 +45,10 @@ private:
 public:
 	trie(const std::vector<std::string>& S, const std::vector<size_t>& p);
 
+	/// Returns the index in the matrix that has node as row and c as column.
+	/// If it doesn't exist, -1 is returned.
+	ssize_t matrix_index(ssize_t node, char c) const;
+
 	/// Get the alphabet as a string.
 	std::string sigma_str() const;
 

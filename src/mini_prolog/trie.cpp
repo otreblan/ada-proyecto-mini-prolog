@@ -63,6 +63,14 @@ ada::trie::trie(
 	}
 }
 
+ssize_t ada::trie::matrix_index(ssize_t node, char c) const
+{
+	if(node < 0 || sigma_order.find(c) == sigma_order.end())
+		return -1;
+
+	return node*sigma_order.size()+sigma_order.at(c);
+}
+
 std::string ada::trie::sigma_str() const
 {
 	std::string s;
