@@ -21,4 +21,5 @@ target_sources(${PROJECT_NAME}
 		executor.cpp
 		mini_prolog.cpp
 		trie.cpp
+		trie_map.cpp
 )
