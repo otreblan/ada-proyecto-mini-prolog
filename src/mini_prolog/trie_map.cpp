@@ -33,6 +33,8 @@ void ada::trie_map::dump(FILE* file) const
 	writer.StartArray();
 	for(const auto& [key, value]: tm)
 	{
+		assert(key.second == value.m);
+
 		writer.StartObject();
 
 		writer.Key("name");
@@ -42,11 +44,14 @@ void ada::trie_map::dump(FILE* file) const
 		writer.Uint64(key.second);
 
 		writer.Key("sigma");
-		writer.String("TODO");
+		writer.String(value.sigma_str());
 
 		writer.Key("matrix");
 		writer.StartArray();
-		// TODO
+		for(ssize_t i: value.matrix)
+		{
+			writer.Int64(i);
+		}
 		writer.EndArray();
 
 		writer.EndObject();

@@ -15,3 +15,13 @@
 // along with mini-prolog.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "trie.hpp"
+
+std::string ada::trie::sigma_str() const
+{
+	std::string s;
+
+	for(char c: sigma)
+		s.push_back(c);
+
+	return s;
+}

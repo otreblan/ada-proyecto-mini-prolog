@@ -16,11 +16,31 @@
 
 #pragma once
 
+#include <cstdlib>
+#include <set>
+#include <string>
+#include <vector>
+
 namespace ada
 {
 
 class trie
 {
+private:
+	/// Size of the strings in S.
+	size_t m;
+
+	/// Alphabet.
+	std::set<char> sigma;
+
+	/// The trie itself.
+	std::vector<ssize_t> matrix;
+public:
+
+	/// Get the alphabet as a string.
+	std::string sigma_str() const;
+
+	friend class trie_map;
 };
 
 };
