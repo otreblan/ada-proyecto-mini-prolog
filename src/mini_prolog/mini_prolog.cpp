@@ -21,6 +21,7 @@
 #include "compiler.hpp"
 #include "executor.hpp"
 #include "mini_prolog.hpp"
+#include "trie_map.hpp"
 #include "utils.h"
 
 void ada::mini_prolog::usage(int exit_code)
@@ -133,8 +134,10 @@ int ada::mini_prolog::run()
 
 			if(FILE* trie_file = fopen(trie_path.c_str(), "r"))
 			{
-				// TODO parse tries
-				executor().execute(*prolog);
+				trie_map tm;
+
+				if(tm.load(trie_file))
+					executor(*prolog, tm).execute(stdout);
 
 				fclose(trie_file);
 				break;

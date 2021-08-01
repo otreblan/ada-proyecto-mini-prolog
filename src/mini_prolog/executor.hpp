@@ -18,6 +18,7 @@
 
 #include <cstdio>
 
+#include "trie_map.hpp"
 #include "utils.h"
 
 namespace ada
@@ -26,12 +27,17 @@ namespace ada
 class executor
 {
 private:
-	// Trie
+	/// The queries
+	const ast_prolog& prolog;
+
+	/// The tries
+	const trie_map& tm;
 
 public:
-	executor();
+	executor(const ast_prolog& prolog, const trie_map& tm);
 
-	void execute(const ast_prolog& prolog);
+	/// Executes the queries and prints the results in the file.
+	void execute(FILE* file);
 };
 
 };
