@@ -81,15 +81,17 @@ target_compile_definitions(${PROJECT_NAME}
 		RAPIDJSON_HAS_STDSTRING
 )
 
-# Bash completion
-file(WRITE ${CMAKE_BINARY_DIR}/bash-completion/${PROJECT_NAME}
-	"complete -F _longopt ${PROJECT_NAME}"
-)
+if(BASH_COMPLETION_FOUND)
+	# Bash completion
+	file(WRITE ${CMAKE_BINARY_DIR}/bash-completion/${PROJECT_NAME}
+		"complete -F _longopt ${PROJECT_NAME}"
+	)
 
-install(FILES
-	${CMAKE_BINARY_DIR}/bash-completion/${PROJECT_NAME}
-	DESTINATION ${BASH_COMPLETION_COMPLETIONSDIR}/
-)
+	install(FILES
+		${CMAKE_BINARY_DIR}/bash-completion/${PROJECT_NAME}
+		DESTINATION ${BASH_COMPLETION_COMPLETIONSDIR}/
+	)
+endif()
 
 # Install target
 install(TARGETS ${PROJECT_NAME}
