@@ -91,7 +91,6 @@ jobs:
         bison
         cmake
         flex
-        pkg-config
         rapidjson
 
     - name: Configure

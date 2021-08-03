@@ -36,13 +36,13 @@ if(UNIX)
 endif()
 
 include(GNUInstallDirs)
-include(FindPkgConfig)
 include(CPack)
 
 # Packages
 find_package(BISON)
 find_package(FLEX)
 find_package(bash-completion)
+find_package(RapidJSON)
 
 add_subdirectory(src) # Sources list
 add_subdirectory(pkg) # Packaging
@@ -54,31 +54,14 @@ set_target_properties(${PROJECT_NAME}
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
 
-## Shared libraries
-#pkg_check_modules(shared
-#	REQUIRED IMPORTED_TARGET
-#		libfoo1
-#		libfoo2
-#)
-
-# Header only libraries
-pkg_check_modules(header_only
-	REQUIRED IMPORTED_TARGET
-		RapidJSON
-)
-
-# Linking
-target_link_libraries(${PROJECT_NAME}
-#	PRIVATE
-#		PkgConfig::shared
-
-	INTERFACE
-		PkgConfig::header_only
-)
-
 target_compile_definitions(${PROJECT_NAME}
 	PRIVATE
 		RAPIDJSON_HAS_STDSTRING
+)
+
+target_include_directories(${PROJECT_NAME}
+	PRIVATE
+		${RAPIDJSON_INCLUDE_DIRS}
 )
 
 if(BASH_COMPLETION_FOUND)
