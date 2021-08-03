@@ -94,6 +94,11 @@ jobs:
         pkg-config
         rapidjson
 
+    - name: Brew prefix
+      run: brew --prefix
+        bison
+        flex
+
     - name: Configure
       run: CXXFLAGS="-Wall -Wextra" cmake -B build
 
