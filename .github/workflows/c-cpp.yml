@@ -78,3 +78,26 @@ jobs:
       with:
         name: arch_package
         path: pkg/arch/*.pkg.tar.*
+
+  mac:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Dependencies
+      run: brew install
+        bison
+        cmake
+        flex
+        pkg-config
+        rapidjson
+
+    - name: Configure
+      run: CXXFLAGS="-Wall -Wextra" cmake -B build
+
+    - name: Build
+      run: |
+          # https://github.com/memkind/memkind/issues/33#issuecomment-540614162
+          export MAKEFLAGS=-j$(sysctl -n hw.logicalcpu)
+          cmake --build build
