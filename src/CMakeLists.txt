@@ -40,6 +40,10 @@ target_sources(${PROJECT_NAME}
 		main.cpp
 )
 
+if(APPLE)
+	set(FLEX_LIBRARIES "/usr/local/opt/flex/lib/libfl.dylib")
+endif()
+
 target_link_libraries(${PROJECT_NAME}
 	PRIVATE
 		${FLEX_LIBRARIES}
