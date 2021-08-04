@@ -131,6 +131,8 @@ bool ada::trie_map::json_handler::EndObject(rapidjson::SizeType)
 
 bool ada::trie_map::json_handler::StartArray()
 {
+	assert(!context_stack.empty());
+
 	auto& top = context_stack.top();
 
 	if(!top.array)
@@ -143,7 +145,10 @@ bool ada::trie_map::json_handler::StartArray()
 
 bool ada::trie_map::json_handler::EndArray(rapidjson::SizeType)
 {
-	// TODO
+	assert(!context_stack.empty());
+
+	context_stack.pop();
+
 	return true;
 }
 
