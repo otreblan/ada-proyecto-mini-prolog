@@ -97,7 +97,13 @@ void ada::trie_map::add_trie(
 
 bool ada::trie_map::json_handler::StartObject()
 {
-	// TODO
+	auto& top = context_stack.top();
+
+	if(!top.object)
+		return false;
+
+	top.s = state::BEFORE_KEY;
+
 	return true;
 }
 
