@@ -102,6 +102,16 @@ bool ada::trie_map::json_handler::StartObject()
 
 	auto& top = context_stack.top();
 
+	if(top.in_array)
+	{
+		auto top_copy = top;
+
+		top_copy.s = state::BEFORE_KEY;
+
+		context_stack.push(top_copy);
+		return true;
+	}
+
 	if(!top.object)
 		return false;
 
