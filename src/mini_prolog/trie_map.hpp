@@ -18,6 +18,7 @@
 
 #include <cstdio>
 #include <map>
+#include <stack>
 #include <string>
 #include <string_view>
 
@@ -46,6 +47,8 @@ private:
 			BEFORE_KEY,
 			IN_ARRAY,
 		};
+
+		std::stack<std::pair<state, std::string>> context;
 
 		trie_map& tm;
 
