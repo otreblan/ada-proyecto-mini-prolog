@@ -94,3 +94,50 @@ void ada::trie_map::add_trie(
 {
 	tm.emplace(std::make_pair(std::make_pair(rule, length), trie(S, p)));
 }
+
+bool ada::trie_map::json_handler::StartObject()
+{
+	// TODO
+	return true;
+}
+
+bool ada::trie_map::json_handler::EndObject(rapidjson::SizeType)
+{
+	// TODO
+	return true;
+}
+
+bool ada::trie_map::json_handler::StartArray()
+{
+	// TODO
+	return true;
+}
+
+bool ada::trie_map::json_handler::EndArray(rapidjson::SizeType)
+{
+	// TODO
+	return true;
+}
+
+bool ada::trie_map::json_handler::Key(const char* str, rapidjson::SizeType, bool)
+{
+	// TODO
+	return true;
+}
+
+bool ada::trie_map::json_handler::String(const char* str, rapidjson::SizeType, bool)
+{
+	// TODO
+	return true;
+}
+
+bool ada::trie_map::json_handler::Uint64(uint64_t n)
+{
+	// TODO
+	return true;
+}
+
+bool ada::trie_map::json_handler::Default()
+{
+	return false;
+}

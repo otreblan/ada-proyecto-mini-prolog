@@ -61,12 +61,21 @@ private:
 
 		trie_map& tm;
 
-
 	public:
 		json_handler(trie_map& tm):
+			context_stack({{.object = true}}),
 			tm(tm)
 		{};
-		// TODO
+
+		bool StartObject();
+		bool EndObject(rapidjson::SizeType);
+		bool StartArray();
+		bool EndArray(rapidjson::SizeType);
+		bool Key(const char* str, rapidjson::SizeType, bool);
+		bool String(const char* str, rapidjson::SizeType, bool);
+		bool Uint64(uint64_t n);
+
+		bool Default();
 	};
 public:
 	/// Write the tries as json.
