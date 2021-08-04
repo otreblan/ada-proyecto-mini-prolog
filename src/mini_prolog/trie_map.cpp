@@ -164,7 +164,7 @@ bool ada::trie_map::json_handler::String(const char* str, rapidjson::SizeType, b
 	return true;
 }
 
-bool ada::trie_map::json_handler::Uint64(uint64_t n)
+bool ada::trie_map::json_handler::Int(int i)
 {
 	// TODO
 	return true;

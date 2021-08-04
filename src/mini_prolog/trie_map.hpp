@@ -64,9 +64,10 @@ private:
 
 	public:
 		json_handler(trie_map& tm):
-			context_stack({{.object = true}}),
 			tm(tm)
-		{};
+		{
+			context_stack.push({.object = true});
+		};
 
 		bool StartObject();
 		bool EndObject(rapidjson::SizeType);
@@ -74,7 +75,7 @@ private:
 		bool EndArray(rapidjson::SizeType);
 		bool Key(const char* str, rapidjson::SizeType, bool);
 		bool String(const char* str, rapidjson::SizeType, bool);
-		bool Uint64(uint64_t n);
+		bool Int(int i);
 
 		bool Default();
 	};
