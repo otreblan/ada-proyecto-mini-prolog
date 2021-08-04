@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with mini-prolog.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <cassert>
 #include <climits>
 
 #include <rapidjson/error/en.h>
@@ -97,6 +98,8 @@ void ada::trie_map::add_trie(
 
 bool ada::trie_map::json_handler::StartObject()
 {
+	assert(!context_stack.empty());
+
 	auto& top = context_stack.top();
 
 	if(!top.object)
@@ -109,7 +112,10 @@ bool ada::trie_map::json_handler::StartObject()
 
 bool ada::trie_map::json_handler::EndObject(rapidjson::SizeType)
 {
-	// TODO
+	assert(!context_stack.empty());
+
+	context_stack.pop();
+
 	return true;
 }
 
