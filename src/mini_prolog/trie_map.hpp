@@ -56,8 +56,6 @@ private:
 			bool array  = false;
 			bool object = false;
 			bool str    = false;
-
-			bool in_array = false;
 		};
 
 		std::stack<context> context_stack;

@@ -102,7 +102,10 @@ bool ada::trie_map::json_handler::StartObject()
 
 	auto& top = context_stack.top();
 
-	if(top.in_array)
+	if(!top.object)
+		return false;
+
+	if(top.s == state::IN_ARRAY)
 	{
 		auto top_copy = top;
 
@@ -111,9 +114,6 @@ bool ada::trie_map::json_handler::StartObject()
 		context_stack.push(top_copy);
 		return true;
 	}
-
-	if(!top.object)
-		return false;
 
 	top.s = state::BEFORE_KEY;
 
@@ -131,7 +131,13 @@ bool ada::trie_map::json_handler::EndObject(rapidjson::SizeType)
 
 bool ada::trie_map::json_handler::StartArray()
 {
-	// TODO
+	auto& top = context_stack.top();
+
+	if(!top.array)
+		return false;
+
+	top.s = state::IN_ARRAY;
+
 	return true;
 }
 
