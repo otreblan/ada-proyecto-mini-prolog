@@ -40,7 +40,16 @@ private:
 		public rapidjson::BaseReaderHandler<rapidjson::UTF8<>, json_handler>
 	{
 	private:
+		enum class state
+		{
+			AFTER_KEY,
+			BEFORE_KEY,
+			IN_ARRAY,
+		};
+
 		trie_map& tm;
+
+
 	public:
 		json_handler(trie_map& tm):
 			tm(tm)
