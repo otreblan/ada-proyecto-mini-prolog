@@ -48,10 +48,20 @@ private:
 			IN_ARRAY,
 		};
 
+		enum class key
+		{
+			NO_KEY,
+			RULES,
+			NAME,
+			LENGTH,
+			SIGMA,
+			MATRIX,
+		};
+
 		struct context
 		{
-			state s         = state::AFTER_KEY;
-			std::string key = "";
+			state s = state::AFTER_KEY;
+			key k   = key::NO_KEY;
 
 			bool array  = false;
 			bool object = false;
