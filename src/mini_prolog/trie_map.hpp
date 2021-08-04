@@ -48,7 +48,16 @@ private:
 			IN_ARRAY,
 		};
 
-		std::stack<std::pair<state, std::string>> context;
+		struct context
+		{
+			state s         = state::AFTER_KEY;
+			std::string key = "";
+			bool array      = false;
+			bool object     = false;
+			bool str        = false;
+		};
+
+		std::stack<context> context_stack;
 
 		trie_map& tm;
 
