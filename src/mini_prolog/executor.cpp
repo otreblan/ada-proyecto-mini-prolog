@@ -16,8 +16,8 @@
 
 #include "executor.hpp"
 
-ada::executor::executor(FILE* input, const trie_map& tm):
-	input(input),
+ada::executor::executor(const ast_prolog& prolog, const trie_map& tm):
+	prolog(prolog),
 	tm(tm)
 {}
 
