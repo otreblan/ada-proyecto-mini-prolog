@@ -28,25 +28,13 @@ ada::compiler::rule_map_t ada::compiler::collapse_rules() const
 	{
 		if(const auto* rule = rule_l->rule)
 		{
-			std::string s = rule_s(*rule);
+			std::string s = rule->str;
 			size_t size = s.size();
 			rmap[{rule->id, size}].emplace_back(std::move(s));
 		}
 	}
 
 	return rmap;
-}
-
-std::string ada::compiler::rule_s(const ast_rule& rule)
-{
-	std::string s;
-
-	for(const auto* seq = rule.character_list; seq; seq = seq->next)
-	{
-		s.push_back(seq->c);
-	}
-
-	return s;
 }
 
 void ada::compiler::print(const rule_map_t& rmap, FILE* file)

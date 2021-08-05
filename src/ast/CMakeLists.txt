@@ -17,7 +17,6 @@
 target_sources(${PROJECT_NAME}
 	PRIVATE
 		# C
-		character_list.c
 		prolog.c
 		rule.c
 		rule_list.c

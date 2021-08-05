@@ -12,9 +12,7 @@
 
 [(),] { return yytext[0]; }
 
-[a-zA-Z] { yylval.charval = yytext[0]; return character; }
-
-[a-zA-Z_]+ { yylval.strval = strdup(yytext); return id; }
+[a-zA-Z_1-9]+ { yylval.strval = strdup(yytext); return id; }
 
 [ \n\r\t]+ {}
 %%

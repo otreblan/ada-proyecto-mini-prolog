@@ -39,9 +39,6 @@ private:
 	/// Gather S sets for each pair of rules and it's sequence length.
 	rule_map_t collapse_rules() const;
 
-	/// Make a string from a rule's character_list.
-	static std::string rule_s(const ast_rule& rule);
-
 	/// Print the mmap from collapse_rules().
 	static void print(const rule_map_t& rmap, FILE* file = stderr);
 

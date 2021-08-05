@@ -16,7 +16,6 @@
 
 #include <stdlib.h>
 
-#include "character_list.h"
 #include "rule.h"
 
 static ast_rule* ast_rule_alloc();
@@ -28,21 +27,21 @@ static ast_rule* ast_rule_alloc()
 	if(rule)
 		*rule = (ast_rule)
 		{
-			.character_list = NULL,
-			.id             = NULL
+			.str = NULL,
+			.id  = NULL
 		};
 
 	return rule;
 }
 
-ast_rule* ast_rule1(char* id, ast_character_list* character_list)
+ast_rule* ast_rule1(char* id, char* str)
 {
 	ast_rule* rule = ast_rule_alloc();
 
 	if(rule)
 	{
-		rule->id             = id;
-		rule->character_list = character_list;
+		rule->id  = id;
+		rule->str = str;
 	}
 
 	return rule;
@@ -53,7 +52,7 @@ void ast_rule_free(ast_rule* rule)
 	if(rule)
 	{
 		free(rule->id);
-		ast_character_list_free(rule->character_list);
+		free(rule->str);
 	}
 	free(rule);
 }

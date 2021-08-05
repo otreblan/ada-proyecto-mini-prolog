@@ -24,11 +24,11 @@ typedef struct _ast_character_list ast_character_list;
 
 typedef struct _ast_rule
 {
-	char*               id;
-	ast_character_list* character_list;
+	char* id;
+	char* str;
 } ast_rule;
 
-ast_rule* ast_rule1(char* id, ast_character_list* character_list);
+ast_rule* ast_rule1(char* id, char* str);
 
 void ast_rule_free(ast_rule* rule);
 
