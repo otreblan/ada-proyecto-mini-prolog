@@ -40,6 +40,8 @@ private:
 
 	bool traverse(const trie& t, std::string_view str, ssize_t node_i);
 
+	std::string reorder(const std::vector<size_t>& p, std::string_view str);
+
 public:
 	executor(const ast_prolog& prolog, const trie_map& tm);
 

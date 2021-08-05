@@ -64,7 +64,7 @@ public:
 	template<class Archive>
 	void serialize(Archive & archive)
 	{
-		archive(m, nodes_n, sigma, sigma_order, matrix);
+		archive(m, nodes_n, sigma, sigma_order, matrix, p);
 	}
 };
 

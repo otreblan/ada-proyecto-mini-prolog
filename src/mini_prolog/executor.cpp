@@ -51,7 +51,7 @@ void ada::executor::query(std::string_view rule, std::string_view str)
 
 	if(it != tm.tm.end())
 	{
-		traverse(it->second, str, 0);
+		traverse(it->second, reorder(it->second.p, str), 0);
 	}
 }
 
@@ -95,4 +95,19 @@ bool ada::executor::traverse(
 	}
 
 	return return_code;
+}
+
+std::string ada::executor::reorder(
+	const std::vector<size_t>& p,
+	std::string_view str
+)
+{
+	std::string result;
+
+	for(size_t p_i: p)
+	{
+		result.push_back(str.at(p_i));
+	}
+
+	return result;
 }
