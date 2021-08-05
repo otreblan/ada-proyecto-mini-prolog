@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with mini-prolog.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <iostream>
+
 #include "executor.hpp"
 
 ada::executor::executor(const ast_prolog& prolog, const trie_map& tm):
@@ -23,5 +25,22 @@ ada::executor::executor(const ast_prolog& prolog, const trie_map& tm):
 
 void ada::executor::execute()
 {
-	// TODO
+	for(auto* list = prolog.rule_list; list; list = list->next)
+	{
+		if(auto* rule_str = list->rule)
+		{
+			query(rule_str->id, rule_str->str);
+		}
+	}
+}
+
+void ada::executor::query(std::string_view rule, std::string_view str) const
+{
+	auto it = tm.tm.find(rule.data());
+
+	if(it != tm.tm.end())
+	{
+		// TODO
+		std::cout << "TODO\n";
+	}
 }

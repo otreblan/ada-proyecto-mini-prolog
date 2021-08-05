@@ -43,6 +43,8 @@ public:
 		const std::vector<std::string>& S,
 		const std::vector<size_t>&      p
 	);
+
+	friend class executor;
 };
 
 };

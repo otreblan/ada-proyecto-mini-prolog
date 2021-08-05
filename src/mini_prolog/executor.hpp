@@ -17,6 +17,7 @@
 #pragma once
 
 #include <cstdio>
+#include <string_view>
 
 #include "trie_map.hpp"
 #include "utils.h"
@@ -32,6 +33,8 @@ private:
 
 	/// The tries
 	const trie_map& tm;
+
+	void query(std::string_view rule, std::string_view str) const;
 
 public:
 	executor(const ast_prolog& prolog, const trie_map& tm);
