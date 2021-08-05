@@ -68,6 +68,8 @@ private:
 			bool str    = false;
 		};
 
+		static const std::unordered_map<std::string_view, key> str2key_map;
+
 		std::stack<context> context_stack;
 
 		trie_map& tm;

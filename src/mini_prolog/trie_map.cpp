@@ -174,3 +174,13 @@ bool ada::trie_map::json_handler::Default()
 {
 	return false;
 }
+
+const std::unordered_map<std::string_view, ada::trie_map::json_handler::key>
+	ada::trie_map::json_handler::str2key_map =
+{
+	{ "rules",  key::RULES  },
+	{ "name",   key::NAME   },
+	{ "length", key::LENGTH },
+	{ "sigma",  key::SIGMA  },
+	{ "matrix", key::MATRIX },
+};
