@@ -34,6 +34,8 @@ private:
 	/// The tries
 	const trie_map& tm;
 
+	std::vector<char> matches;
+
 	void query(std::string_view rule, std::string_view str) const;
 
 public:

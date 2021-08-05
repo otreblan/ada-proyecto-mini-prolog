@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with mini-prolog.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <iostream>
+#include <cstdio>
 
 #include "executor.hpp"
 
@@ -30,6 +30,16 @@ void ada::executor::execute()
 		if(auto* rule_str = list->rule)
 		{
 			query(rule_str->id, rule_str->str);
+			for(size_t i = 0; i < matches.size(); i++)
+			{
+				printf(
+					"X = %c%s",
+					matches[i],
+					i == matches.size()-1 ? ".\n" : ", "
+				);
+			}
+
+			matches.clear();
 		}
 	}
 }
