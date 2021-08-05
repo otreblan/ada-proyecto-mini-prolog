@@ -103,6 +103,8 @@ jobs:
 
         export CPPFLAGS+=" -I/usr/local/opt/flex/include"
         export CPPFLAGS+=" -I/usr/local/opt/cereal/include"
+        tree /usr/local/opt
+
         CXXFLAGS="-Wall -Wextra" cmake -B build
 
     - name: Build
