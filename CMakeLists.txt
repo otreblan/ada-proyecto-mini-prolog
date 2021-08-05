@@ -66,7 +66,8 @@ set_target_properties(${PROJECT_NAME}
 
 if(APPLE)
 	target_include_directories(${PROJECT_NAME}
-		"${CMAKE_CURRENT_BINARY_DIR}/cereal-prefix/src/cereal/include"
+		PRIVATE
+			"${CMAKE_CURRENT_BINARY_DIR}/cereal-prefix/src/cereal/include"
 	)
 endif()
 
