@@ -45,5 +45,9 @@ void ada::trie_map::dump(std::ostream& os) const
 
 bool ada::trie_map::load(std::istream& is)
 {
-	// TODO
+	cereal::JSONInputArchive iarchive(is);
+
+	iarchive(tm);
+
+	return true;
 }
