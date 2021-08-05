@@ -53,6 +53,9 @@ public:
 	/// Get the alphabet as a string.
 	std::string sigma_str() const;
 
+	friend std::ostream& operator<<(std::ostream& os, const trie& t);
+	void print_edges(std::ostream& os, size_t node) const;
+
 	friend class trie_map;
 	friend class executor;
 
@@ -62,5 +65,7 @@ public:
 		archive(m, nodes_n, sigma, sigma_order, matrix);
 	}
 };
+
+std::ostream& operator<<(std::ostream& os, const trie& t);
 
 };

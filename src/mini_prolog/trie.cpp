@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with mini-prolog.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <iostream>
+
 #include "trie.hpp"
 
 static size_t m_init(const std::vector<std::string>& S);
@@ -87,4 +89,49 @@ std::string ada::trie::sigma_str() const
 		s.push_back(c);
 
 	return s;
+}
+
+void ada::trie::print_edges(std::ostream& os, size_t node) const
+{
+	for(char c: sigma)
+	{
+		size_t i = matrix_index(node, c);
+
+		if(matrix.at(i) != -1)
+		{
+			os
+				<< '\t'
+				<< node
+				<< " -> "
+				<< matrix.at(i)
+				<< " [label=\""
+				<< c
+				<< "\"];\n"
+			;
+			print_edges(os, matrix.at(i));
+		}
+	}
+}
+
+std::ostream& ada::operator<<(std::ostream& os, const trie& t)
+{
+	os <<
+		"digraph D {\n"
+		"\tforcelabels=true;\n"
+		"\tlabelloc=\"t\";\n"
+		"\tlabeljust=\"l\";\n"
+		"\tlabel=\"# aristas: " << t.nodes_n-1 << "\";\n"
+	;
+
+	os << "\n\t//Nodes\n";
+	for(size_t n = 0; n < t.nodes_n; n++)
+	{
+		os << '\t' << n << " [label=\"\"];\n";
+	}
+
+	os << "\n\t//Edges\n";
+	t.print_edges(os, 0);
+
+	os << "}\n";
+	return os;
 }
