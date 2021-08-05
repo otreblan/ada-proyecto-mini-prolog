@@ -41,8 +41,10 @@ include(GNUInstallDirs)
 
 if(APPLE)
 	ExternalProject_Add(cereal
-		GIT_REPOSITORY https://github.com/USCiLab/cereal
-		INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/cereal"
+		URL https://github.com/USCiLab/cereal/archive/refs/tags/v1.3.0.tar.gz
+		CONFIGURE_COMMAND ""
+		BUILD_COMMAND ""
+		INSTALL_COMMAND ""
 	)
 endif()
 
@@ -62,6 +64,11 @@ set_target_properties(${PROJECT_NAME}
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
 
+if(APPLE)
+	target_include_directories(${PROJECT_NAME}
+		"${CMAKE_CURRENT_BINARY_DIR}/cereal-prefix/src/cereal/include"
+	)
+endif()
 
 target_link_libraries(${PROJECT_NAME}
 	INTERFACE
