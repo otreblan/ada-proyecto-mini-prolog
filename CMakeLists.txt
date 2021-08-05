@@ -54,9 +54,10 @@ set_target_properties(${PROJECT_NAME}
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
 
-target_include_directories(${PROJECT_NAME}
-	PRIVATE
-		${CEREAL_INCLUDE_DIRS}
+
+target_link_libraries(${PROJECT_NAME}
+	INTERFACE
+		cereal
 )
 
 if(BASH_COMPLETION_FOUND)
