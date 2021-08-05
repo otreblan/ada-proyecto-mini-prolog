@@ -102,6 +102,7 @@ jobs:
         export LDFLAGS+=" -L/usr/local/opt/bison/lib"
 
         export CPPFLAGS+=" -I/usr/local/opt/flex/include"
+        export CPPFLAGS+=" -I/usr/local/opt/cereal/include"
         CXXFLAGS="-Wall -Wextra" cmake -B build
 
     - name: Build
