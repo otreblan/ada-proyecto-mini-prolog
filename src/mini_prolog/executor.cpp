@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with mini-prolog.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <cassert>
 #include <cstdio>
 
 #include "executor.hpp"
@@ -44,13 +45,54 @@ void ada::executor::execute()
 	}
 }
 
-void ada::executor::query(std::string_view rule, std::string_view str) const
+void ada::executor::query(std::string_view rule, std::string_view str)
 {
 	auto it = tm.tm.find(rule.data());
 
 	if(it != tm.tm.end())
 	{
-		// TODO
-		std::cout << "TODO\n";
+		traverse(it->second, str, 0);
 	}
+}
+
+bool ada::executor::traverse(
+	const trie& t,
+	std::string_view str,
+	ssize_t node_i
+)
+{
+	//TODO
+	if(node_i == -1)
+		return false;
+
+	if(str.empty())
+		return true;
+
+	bool return_code = true;
+	char c = str.at(0);
+
+	if(c == 'X')
+	{
+		for(char c: t.sigma)
+		{
+			if(traverse(
+				t,
+				str.substr(1),
+				t.matrix_index(node_i == 0 ? 0 : t.matrix.at(node_i), c)
+			))
+			{
+				matches.push_back(c);
+			}
+		}
+	}
+	else
+	{
+		return traverse(
+			t,
+			str.substr(1),
+			t.matrix_index(node_i == 0 ? 0 : t.matrix.at(node_i), c)
+		);
+	}
+
+	return return_code;
 }

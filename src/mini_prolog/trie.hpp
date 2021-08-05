@@ -54,6 +54,7 @@ public:
 	std::string sigma_str() const;
 
 	friend class trie_map;
+	friend class executor;
 
 	template<class Archive>
 	void serialize(Archive & archive)

@@ -36,7 +36,9 @@ private:
 
 	std::vector<char> matches;
 
-	void query(std::string_view rule, std::string_view str) const;
+	void query(std::string_view rule, std::string_view str);
+
+	bool traverse(const trie& t, std::string_view str, ssize_t node_i);
 
 public:
 	executor(const ast_prolog& prolog, const trie_map& tm);
