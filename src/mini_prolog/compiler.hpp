@@ -18,6 +18,7 @@
 
 #include <cstdio>
 #include <functional>
+#include <iostream>
 #include <map>
 #include <string>
 #include <vector>
@@ -32,7 +33,7 @@ class compiler
 private:
 	using rule_map_t = std::map<std::pair<std::string, size_t>, std::vector<std::string>>;
 
-	FILE* outfile;
+	std::ostream& os;
 	const ast_prolog& prolog;
 
 	/// Gather S sets for each pair of rules and it's sequence length.
@@ -48,7 +49,7 @@ private:
 	void compile(std::function<std::vector<size_t>(const std::vector<std::string>&)> f);
 
 public:
-	compiler(FILE* outfile, const ast_prolog& prolog);
+	compiler(std::ostream& os, const ast_prolog& prolog);
 
 	void compile_heuristic();
 	void compile_optimal();

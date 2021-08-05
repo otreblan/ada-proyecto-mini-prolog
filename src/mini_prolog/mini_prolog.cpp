@@ -16,6 +16,7 @@
 
 #include <cstdio>
 #include <cstdlib>
+#include <fstream>
 #include <getopt.h>
 
 #include "compiler.hpp"
@@ -132,14 +133,14 @@ int ada::mini_prolog::run()
 				break;
 			}
 
-			if(FILE* trie_file = fopen(trie_path.c_str(), "r"))
+			std::ifstream ofs(trie_path);
+			if(ofs.is_open())
 			{
 				trie_map tm;
 
-				if(tm.load(trie_file))
+				if(tm.load(ofs))
 					executor(*prolog, tm).execute(stdout);
 
-				fclose(trie_file);
 				break;
 			}
 
@@ -151,9 +152,10 @@ int ada::mini_prolog::run()
 		case action_type::heuristic:
 		case action_type::optim:
 		{
-			if(FILE* output = fopen(output_path.c_str(), "w"))
+			std::ofstream ofs(output_path);
+			if(ofs.is_open())
 			{
-				compiler c(output, *prolog);
+				compiler c(ofs, *prolog);
 
 				switch(action)
 				{
@@ -169,7 +171,6 @@ int ada::mini_prolog::run()
 						break;
 				}
 
-				fclose(output);
 				break;
 			}
 

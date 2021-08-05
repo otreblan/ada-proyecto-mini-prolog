@@ -15,7 +15,7 @@ jobs:
     - uses: ammaraskar/gcc-problem-matcher@master
 
     - name: deps
-      run: sudo apt install asciidoctor g++-10 bash-completion bison libfl-dev rapidjson-dev
+      run: sudo apt install asciidoctor g++-10 bash-completion bison libfl-dev libcereal-dev
 
     - name: configure
       run: cmake
@@ -89,9 +89,9 @@ jobs:
       run: brew install
         bash-completion@2
         bison
+        cereal
         cmake
         flex
-        rapidjson
 
     - name: Configure
       run: |

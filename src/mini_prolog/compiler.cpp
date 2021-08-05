@@ -66,8 +66,8 @@ void ada::compiler::print(const rule_map_t& rmap, FILE* file)
 	}
 }
 
-ada::compiler::compiler(FILE* outfile, const ast_prolog& prolog):
-	outfile(outfile),
+ada::compiler::compiler(std::ostream& os, const ast_prolog& prolog):
+	os(os),
 	prolog(prolog)
 {}
 
@@ -81,7 +81,7 @@ void ada::compiler::compile(
 	for(const auto& [rule, S]: rmap)
 		tm.add_trie(rule.first, rule.second, S, f(S));
 
-	tm.dump(outfile);
+	tm.dump(os);
 }
 
 void ada::compiler::compile_heuristic()

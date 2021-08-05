@@ -17,74 +17,9 @@
 #include <cassert>
 #include <climits>
 
-#include <rapidjson/error/en.h>
-#include <rapidjson/filereadstream.h>
-#include <rapidjson/filewritestream.h>
-#include <rapidjson/reader.h>
-#include <rapidjson/writer.h>
+#include <cereal/archives/json.hpp>
 
 #include "trie_map.hpp"
-
-void ada::trie_map::dump(FILE* file) const
-{
-	using namespace rapidjson;
-
-	char            buffer[PIPE_BUF];
-	FileWriteStream fws(file, buffer, sizeof(buffer));
-	Writer          writer(fws);
-
-	writer.StartObject();
-
-	writer.Key("rules");
-	writer.StartArray();
-	for(const auto& [key, value]: tm)
-	{
-		assert(key.second == value.m);
-
-		writer.StartObject();
-
-		writer.Key("name");
-		writer.String(key.first);
-
-		writer.Key("length");
-		writer.Uint64(key.second);
-
-		writer.Key("sigma");
-		writer.String(value.sigma_str());
-
-		writer.Key("matrix");
-		writer.StartArray();
-		for(ssize_t i: value.matrix)
-		{
-			writer.Int64(i);
-		}
-		writer.EndArray();
-
-		writer.EndObject();
-	}
-	writer.EndArray();
-
-	writer.EndObject();
-}
-
-bool ada::trie_map::load(FILE* file)
-{
-	using namespace rapidjson;
-
-	char           buffer[PIPE_BUF];
-	json_handler   handler(*this);
-	Reader         reader;
-	FileReadStream frs(file, buffer, sizeof(buffer));
-
-	if(!reader.Parse<ParseFlag::kParseNumbersAsStringsFlag>(frs, handler))
-	{
-		ParseErrorCode e = reader.GetParseErrorCode();
-		fprintf(stderr, "%s\n", GetParseError_En(e));
-		return false;
-	}
-
-	return true;
-}
 
 void ada::trie_map::add_trie(
 	std::string_view                rule,
@@ -96,91 +31,12 @@ void ada::trie_map::add_trie(
 	tm.emplace(std::make_pair(std::make_pair(rule, length), trie(S, p)));
 }
 
-bool ada::trie_map::json_handler::StartObject()
-{
-	assert(!context_stack.empty());
-
-	auto& top = context_stack.top();
-
-	if(!top.object)
-		return false;
-
-	if(top.s == state::IN_ARRAY)
-	{
-		auto top_copy = top;
-
-		top_copy.s = state::BEFORE_KEY;
-
-		context_stack.push(top_copy);
-		return true;
-	}
-
-	top.s = state::BEFORE_KEY;
-
-	return true;
-}
-
-bool ada::trie_map::json_handler::EndObject(rapidjson::SizeType)
-{
-	assert(!context_stack.empty());
-
-	context_stack.pop();
-
-	return true;
-}
-
-bool ada::trie_map::json_handler::StartArray()
-{
-	assert(!context_stack.empty());
-
-	auto& top = context_stack.top();
-
-	if(!top.array)
-		return false;
-
-	top.s = state::IN_ARRAY;
-
-	return true;
-}
-
-bool ada::trie_map::json_handler::EndArray(rapidjson::SizeType)
-{
-	assert(!context_stack.empty());
-
-	context_stack.pop();
-
-	return true;
-}
-
-bool ada::trie_map::json_handler::Key(const char* str, rapidjson::SizeType, bool)
+void ada::trie_map::dump(std::ostream& os) const
 {
 	// TODO
-	return true;
 }
 
-bool ada::trie_map::json_handler::String(const char* str, rapidjson::SizeType, bool)
+bool ada::trie_map::load(std::istream& is)
 {
 	// TODO
-	return true;
 }
-
-bool ada::trie_map::json_handler::Int(int i)
-{
-	// TODO
-	return true;
-}
-
-bool ada::trie_map::json_handler::Default()
-{
-	return false;
-}
-
-const std::unordered_map<std::string_view, ada::trie_map::json_handler::key>
-	ada::trie_map::json_handler::str2key_map =
-{
-	{ "rules",  key::RULES  },
-	{ "name",   key::NAME   },
-	{ "length", key::LENGTH },
-	{ "sigma",  key::SIGMA  },
-	{ "matrix", key::MATRIX },
-};

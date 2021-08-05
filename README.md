@@ -5,8 +5,8 @@
 * `bash-completion`
 * `bison`
 * `cmake`
+* `libcereal-dev`
 * `libfl-dev`
-* `rapidjson-dev`
 
 ## Build
 ``` bash

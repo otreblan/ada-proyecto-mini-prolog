@@ -16,13 +16,8 @@
 
 #pragma once
 
-#include <cstdio>
+#include <iostream>
 #include <map>
-#include <stack>
-#include <string>
-#include <string_view>
-
-#include <rapidjson/reader.h>
 
 #include "trie.hpp"
 
@@ -37,66 +32,12 @@ private:
 	/// The map itself.
 	std::map<key_t, trie> tm;
 
-	class json_handler:
-		public rapidjson::BaseReaderHandler<rapidjson::UTF8<>, json_handler>
-	{
-	private:
-		enum class state
-		{
-			AFTER_KEY,
-			BEFORE_KEY,
-			IN_ARRAY,
-		};
-
-		enum class key
-		{
-			NO_KEY,
-			RULES,
-			NAME,
-			LENGTH,
-			SIGMA,
-			MATRIX,
-		};
-
-		struct context
-		{
-			state s = state::AFTER_KEY;
-			key k   = key::NO_KEY;
-
-			bool array  = false;
-			bool object = false;
-			bool str    = false;
-		};
-
-		static const std::unordered_map<std::string_view, key> str2key_map;
-
-		std::stack<context> context_stack;
-
-		trie_map& tm;
-
-	public:
-		json_handler(trie_map& tm):
-			tm(tm)
-		{
-			context_stack.push({.object = true});
-		};
-
-		bool StartObject();
-		bool EndObject(rapidjson::SizeType);
-		bool StartArray();
-		bool EndArray(rapidjson::SizeType);
-		bool Key(const char* str, rapidjson::SizeType, bool);
-		bool String(const char* str, rapidjson::SizeType, bool);
-		bool Int(int i);
-
-		bool Default();
-	};
 public:
 	/// Write the tries as json.
-	void dump(FILE* file) const;
+	void dump(std::ostream& os) const;
 
 	/// Load tries from json.
-	bool load(FILE* file);
+	bool load(std::istream& is);
 
 	/// Add a new trie for a rule and length pair.
 	void add_trie(
