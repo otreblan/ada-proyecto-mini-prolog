@@ -30,6 +30,8 @@ void ada::executor::execute()
 	{
 		if(auto* rule_str = list->rule)
 		{
+			assert(matches.empty());
+
 			query(rule_str->id, rule_str->str);
 			for(size_t i = 0; i < matches.size(); i++)
 			{
@@ -51,7 +53,8 @@ void ada::executor::query(std::string_view rule, std::string_view str)
 
 	if(it != tm.tm.end())
 	{
-		traverse(it->second, reorder(it->second.p, str), 0);
+		std::string r_str(reorder(it->second.p, str));
+		traverse(it->second, r_str, 0);
 	}
 }
 
@@ -61,8 +64,7 @@ bool ada::executor::traverse(
 	ssize_t node_i
 )
 {
-	//TODO
-	if(node_i == -1)
+	if((size_t)node_i > t.nodes_n)
 		return false;
 
 	if(str.empty())
@@ -75,10 +77,12 @@ bool ada::executor::traverse(
 	{
 		for(char c: t.sigma)
 		{
-			if(traverse(
+			ssize_t i = t.matrix_index(node_i, c);
+
+			if((i != -1) && traverse(
 				t,
 				str.substr(1),
-				t.matrix_index(node_i == 0 ? 0 : t.matrix.at(node_i), c)
+				t.matrix.at(i)
 			))
 			{
 				matches.push_back(c);
@@ -87,10 +91,14 @@ bool ada::executor::traverse(
 	}
 	else
 	{
+		ssize_t i = t.matrix_index(node_i, c);
+		if(i == -1)
+			return false;
+
 		return traverse(
 			t,
 			str.substr(1),
-			t.matrix_index(node_i == 0 ? 0 : t.matrix.at(node_i), c)
+			t.matrix.at(i)
 		);
 	}
 
