@@ -41,7 +41,8 @@ include(GNUInstallDirs)
 
 if(APPLE)
 	ExternalProject_Add(cereal
-		GIT_REPOSITORY git@github.com:USCiLab/cereal.git
+		GIT_REPOSITORY https://github.com/USCiLab/cereal
+		INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/cereal"
 	)
 endif()
 
