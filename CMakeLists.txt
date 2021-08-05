@@ -35,8 +35,15 @@ if(UNIX)
 	endif()
 endif()
 
-include(GNUInstallDirs)
 include(CPack)
+include(ExternalProject)
+include(GNUInstallDirs)
+
+if(APPLE)
+	ExternalProject_Add(cereal
+		GIT_REPOSITORY git@github.com:USCiLab/cereal.git
+	)
+endif()
 
 # Packages
 find_package(BISON)
