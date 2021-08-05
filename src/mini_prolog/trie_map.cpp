@@ -17,23 +17,30 @@
 #include <cassert>
 #include <climits>
 
+#include <cereal/types/vector.hpp>
+#include <cereal/types/unordered_map.hpp>
+#include <cereal/types/set.hpp>
+#include <cereal/types/map.hpp>
+#include <cereal/types/string.hpp>
+
 #include <cereal/archives/json.hpp>
 
 #include "trie_map.hpp"
 
 void ada::trie_map::add_trie(
 	std::string_view                rule,
-	size_t                          length,
 	const std::vector<std::string>& S,
 	const std::vector<size_t>&      p
 )
 {
-	tm.emplace(std::make_pair(std::make_pair(rule, length), trie(S, p)));
+	tm.emplace(std::make_pair(rule, trie(S, p)));
 }
 
 void ada::trie_map::dump(std::ostream& os) const
 {
-	// TODO
+	cereal::JSONOutputArchive oarchive(os);
+
+	oarchive(tm);
 }
 
 bool ada::trie_map::load(std::istream& is)

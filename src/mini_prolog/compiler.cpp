@@ -79,7 +79,7 @@ void ada::compiler::compile(
 
 	//print(rmap);
 	for(const auto& [rule, S]: rmap)
-		tm.add_trie(rule.first, rule.second, S, f(S));
+		tm.add_trie(rule.first, S, f(S));
 
 	tm.dump(os);
 }

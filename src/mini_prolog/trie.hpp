@@ -53,6 +53,12 @@ public:
 	std::string sigma_str() const;
 
 	friend class trie_map;
+
+	template<class Archive>
+	void serialize(Archive & archive)
+	{
+		archive(m, nodes_n, sigma, sigma_order, matrix);
+	}
 };
 
 };
