@@ -28,16 +28,16 @@ class executor
 {
 private:
 	/// The queries
-	const ast_prolog& prolog;
+	FILE* input;
 
 	/// The tries
 	const trie_map& tm;
 
 public:
-	executor(const ast_prolog& prolog, const trie_map& tm);
+	executor(FILE* input, const trie_map& tm);
 
 	/// Executes the queries and prints the results in the file.
-	void execute(FILE* file);
+	void execute();
 };
 
 };

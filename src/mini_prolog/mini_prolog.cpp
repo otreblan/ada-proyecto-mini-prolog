@@ -115,12 +115,6 @@ int ada::mini_prolog::run()
 		return EXIT_FAILURE;
 	}
 
-	ast_prolog* prolog = parse_file(input);
-	fclose(input);
-
-	if(!prolog)
-		return EXIT_FAILURE;
-
 	int exit_code = EXIT_SUCCESS;
 	switch(action)
 	{
@@ -139,7 +133,7 @@ int ada::mini_prolog::run()
 				trie_map tm;
 
 				if(tm.load(ofs))
-					executor(*prolog, tm).execute(stdout);
+					executor(input, tm).execute();
 
 				break;
 			}
@@ -152,6 +146,11 @@ int ada::mini_prolog::run()
 		case action_type::heuristic:
 		case action_type::optim:
 		{
+			ast_prolog* prolog = parse_file(input);
+
+			if(!prolog)
+				return EXIT_FAILURE;
+
 			std::ofstream ofs(output_path);
 			if(ofs.is_open())
 			{
@@ -171,11 +170,13 @@ int ada::mini_prolog::run()
 						break;
 				}
 
+				ast_prolog_free(prolog);
 				break;
 			}
 
 			exit_code = EXIT_FAILURE;
 			perror(output_path.c_str());
+			ast_prolog_free(prolog);
 			break;
 		}
 
@@ -183,6 +184,7 @@ int ada::mini_prolog::run()
 			break;
 	}
 
-	ast_prolog_free(prolog);
+	fclose(input);
+
 	return exit_code;
 }

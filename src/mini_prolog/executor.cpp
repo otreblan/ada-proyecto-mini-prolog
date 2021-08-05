@@ -16,13 +16,12 @@
 
 #include "executor.hpp"
 
-ada::executor::executor(const ast_prolog& prolog, const trie_map& tm):
-	prolog(prolog),
+ada::executor::executor(FILE* input, const trie_map& tm):
+	input(input),
 	tm(tm)
 {}
 
-void ada::executor::execute(FILE* file)
+void ada::executor::execute()
 {
 	// TODO
-	fprintf(file, "%s\n", "Compile: TODO");
 }

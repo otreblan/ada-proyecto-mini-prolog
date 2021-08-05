@@ -44,6 +44,7 @@ private:
 	std::vector<ssize_t> matrix;
 public:
 	trie(const std::vector<std::string>& S, const std::vector<size_t>& p);
+	trie(){};
 
 	/// Returns the index in the matrix that has node as row and c as column.
 	/// If it doesn't exist, -1 is returned.
