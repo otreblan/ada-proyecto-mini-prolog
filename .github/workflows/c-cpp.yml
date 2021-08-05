@@ -92,7 +92,6 @@ jobs:
         cereal
         cmake
         flex
-        tree
 
     - name: Configure
       run: |
@@ -104,7 +103,7 @@ jobs:
 
         export CPPFLAGS+=" -I/usr/local/opt/flex/include"
         export CPPFLAGS+=" -I/usr/local/opt/cereal/include"
-        tree /usr/local/opt
+        brew ls --verbose cereal
 
         CXXFLAGS="-Wall -Wextra" cmake -B build
 
