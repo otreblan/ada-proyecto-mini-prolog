@@ -56,7 +56,8 @@ ada::trie::trie(
 	nodes_n(1), // Root
 	sigma(sigma_init(S)),
 	sigma_order(sigma_order_init(sigma)),
-	matrix(sigma_order.size()*m*(1+S.size()), -1)
+	matrix(sigma_order.size()*m*(1+S.size()), -1),
+	p(p)
 {
 	for(std::string_view str: S)
 	{

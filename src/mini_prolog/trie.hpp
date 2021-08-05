@@ -42,6 +42,8 @@ private:
 
 	/// The trie itself.
 	std::vector<ssize_t> matrix;
+
+	std::vector<size_t> p;
 public:
 	trie(const std::vector<std::string>& S, const std::vector<size_t>& p);
 	trie(){};
